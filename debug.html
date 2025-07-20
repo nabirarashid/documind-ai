@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .loading { background-color: #fff3cd; border-color: #ffeaa7; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Backend Connection Debug Test</h1>
+    
+    <div class="test-section">
+        <h3>1. Test Root Endpoint</h3>
+        <button onclick="testRoot()">Test GET /</button>
+        <div id="root-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Initialize Knowledge Base</h3>
+        <button onclick="initialize()">Initialize</button>
+        <div id="init-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Test Ask Endpoint</h3>
+        <input type="text" id="question" placeholder="Ask a question..." style="width: 300px; padding: 5px;">
+        <button onclick="askQuestion()">Ask</button>
+        <div id="ask-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Debug Log</h3>
+        <div id="debug-log" class="log"></div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://127.0.0.1:8000';
+        const debugLog = document.getElementById('debug-log');
+        
+        function log(message) {
+            const timestamp = new Date().toISOString();
+            debugLog.textContent += `[${timestamp}] ${message}\n`;
+            console.log(message);
+        }
+        
+        function showResult(elementId, content, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = content;
+            element.className = 'test-section ' + (isSuccess ? 'success' : 'error');
+        }
+        
+        function showLoading(elementId) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = 'Loading...';
+            element.className = 'test-section loading';
+        }
+        
+        async function testRoot() {
+            showLoading('root-result');
+            log('Testing root endpoint...');
+            
+            try {
+                const response = await fetch(`${BASE_URL}/`);
+                const data = await response.json();
+                
+                log(`Root test: ${response.status} - ${JSON.stringify(data)}`);
+                showResult('root-result', 
+                    `<strong>Success!</strong><br>Status: ${response.status}<br>Response: ${JSON.stringify(data, null, 2)}`,
+                    true
+                );
+            } catch (error) {
+                log(`Root test error: ${error.message}`);
+                showResult('root-result', 
+                    `<strong>Error!</strong><br>${error.message}<br><br>Common issues:<br>
+                    - Backend not running<br>
+                    - Wrong port (check if it's 8000)<br>
+                    - CORS issues`,
+                    false
+                );
+            }
+        }
+        
+        async function initialize() {
+            showLoading('init-result');
+            log('Initializing knowledge base...');
+            
+            try {
+                const response = await fetch(`${BASE_URL}/initialize`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                log(`Initialize: ${response.status} - ${JSON.stringify(data)}`);
+                showResult('init-result',
+                    `<strong>Success!</strong><br>Status: ${response.status}<br>Response: ${JSON.stringify(data, null, 2)}`,
+                    response.ok
+                );
+            } catch (error) {
+                log(`Initialize error: ${error.message}`);
+                showResult('init-result', 
+                    `<strong>Error!</strong><br>${error.message}`,
+                    false
+                );
+            }
+        }
+        
+        async function askQuestion() {
+            const question = document.getElementById('question').value;
+            if (!question.trim()) {
+                alert('Please enter a question');
+                return;
+            }
+            
+            showLoading('ask-result');
+            log(`Asking question: "${question}"`);
+            
+            try {
+                const response = await fetch(`${BASE_URL}/ask`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+                
+                const data = await response.json();
+                
+                log(`Ask response: ${response.status} - ${JSON.stringify(data)}`);
+                showResult('ask-result',
+                    `<strong>Success!</strong><br>Status: ${response.status}<br>Answer: ${data.answer || JSON.stringify(data)}`,
+                    response.ok
+                );
+            } catch (error) {
+                log(`Ask error: ${error.message}`);
+                showResult('ask-result', 
+                    `<strong>Error!</strong><br>${error.message}`,
+                    false
+                );
+            }
+        }
+        
+        // Auto-test root endpoint on load
+        window.onload = () => {
+            log('Page loaded, testing connection...');
+            testRoot();
+        };
+    </script>
+</body>
+</html>
