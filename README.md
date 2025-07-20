@@ -1,28 +1,37 @@
 # 🧠 documind ai - intelligent documentation assistant
 
-a powerful rag (retrieval-augmented generation) system that enables semantic search and intelligent question-answering over documentation using vector embeddings and ai.
+a powerful rag (retrieval-augmented generation) system that enables semantic search and intelligent question-answering across multiple developer tool documentations using vector embeddings and ai.
 
 ## ✨ features
 
-- **🔍 semantic search**: advanced vector-based search using sentence transformers
-- **⚡ lightning fast**: optimized with faiss for sub-second search performance
+- **🔍 multi-source search**: semantic search across stripe, react, next.js, tailwind css, and vercel docs
+- **⚡ lightning fast**: optimized with chromadb for sub-second search performance  
 - **🤖 ai-powered**: integrated with google gemini flash for intelligent responses
-- **📚 documentation scraping**: automated web scraping for documentation ingestion
-- **💾 persistent storage**: vector embeddings cached for instant retrieval
+- **📚 source attribution**: shows relevant documentation sources for each answer
+- **💾 persistent storage**: vector embeddings cached with chromadb for instant retrieval
 - **🎨 modern ui**: clean react frontend with tailwind css
 - **🚀 production ready**: fastapi backend with cors support
+- **🛠️ developer focused**: covers payment apis, ui frameworks, deployment, and styling
 
 ## 🏗️ how it works
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   react frontend │    │  fastapi backend │    │  vector store   │
+│   react frontend │    │  fastapi backend │    │   chromadb      │
 │                 │────│                  │────│                 │
-│ • chat interface│    │ • rag pipeline   │    │ • faiss index   │
+│ • chat interface│    │ • rag pipeline   │    │ • vector store  │
 │ • tailwind css │    │ • gemini flash   │    │ • embeddings    │
-│ • vite build    │    │ • cors enabled   │    │ • metadata      │
+│ • vite build    │    │ • cors enabled   │    │ • persistence   │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
+
+## 📚 supported documentation
+
+- **💳 stripe**: payment apis, checkout, billing, connect
+- **⚛️ react**: components, hooks, state management, routing  
+- **🔗 next.js**: app router, pages, api routes, deployment
+- **🎨 tailwind css**: utility classes, responsive design, dark mode
+- **☁️ vercel**: deployment, functions, storage, cli
 
 ## 🚀 getting started
 
@@ -35,7 +44,7 @@ a powerful rag (retrieval-augmented generation) system that enables semantic sea
 ### 1. grab the code
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/nabirarashid/ai-dev-tool.git
 cd ai-dev-assistant
 ```
 
@@ -62,97 +71,50 @@ cd ../frontend
 
 # install dependencies
 npm install
-
-# start development server
-npm run dev
 ```
 
-### 4. run everything
-
-**backend** (terminal 1):
+### 4. initialize the documentation
 
 ```bash
+# start the backend first
 cd backend
 source venv/bin/activate
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
+
+# in another terminal, initialize docs (this will scrape all enabled documentation)
+curl -X POST http://localhost:8000/initialize
 ```
 
-**frontend** (terminal 2):
+### 5. run the frontend
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-visit `http://localhost:5173` to see your app! 🎉
+visit `http://localhost:5173` to start asking questions! 🎉
 
 ## 📁 what's inside
 
 ```
 ai-dev-assistant/
 ├── backend/
-│   ├── main.py              # fastapi application
-│   ├── embed_store.py       # vector embedding store
-│   ├── scrape.py           # documentation scraper
+│   ├── main.py              # fastapi application with rag endpoints
+│   ├── embed_store.py       # chromadb vector store wrapper  
+│   ├── tools.py            # documentation source configurations
+│   ├── scrape.py           # multi-source documentation scraper
 │   ├── requirements.txt    # python dependencies
 │   ├── .env               # environment variables
-│   ├── faiss.index        # vector index (generated)
-│   └── faiss_meta.pkl     # metadata cache (generated)
+│   └── chroma_store/      # persistent chromadb storage (generated)
 ├── frontend/
 │   ├── src/
-│   │   ├── components/    # react components
-│   │   ├── lib/          # api utilities
+│   │   ├── components/    # react components (chat, messages, sources)
 │   │   ├── App.tsx       # main application
 │   │   └── main.tsx      # entry point
-│   ├── public/           # static assets
 │   ├── package.json      # node dependencies
-│   └── tailwind.config.js # tailwind configuration
+│   ├── postcss.config.js # tailwind configuration
+│   └── tailwind.config.js # tailwind styling
 └── README.md             # this file
-```
-
-## ⚙️ configuration
-
-### 4. Run the Application
-
-**Backend** (Terminal 1):
-
-```bash
-cd backend
-source venv/bin/activate
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-
-**Frontend** (Terminal 2):
-
-```bash
-cd frontend
-npm run dev
-```
-
-Visit `http://localhost:5173` to access the application!
-
-## 📁 Project Structure
-
-```
-ai-dev-assistant/
-├── backend/
-│   ├── main.py              # FastAPI application
-│   ├── embed_store.py       # Vector embedding store
-│   ├── scrape.py           # Documentation scraper
-│   ├── requirements.txt    # Python dependencies
-│   ├── .env               # Environment variables
-│   ├── faiss.index        # Vector index (generated)
-│   └── faiss_meta.pkl     # Metadata cache (generated)
-├── frontend/
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── lib/          # API utilities
-│   │   ├── App.tsx       # Main application
-│   │   └── main.tsx      # Entry point
-│   ├── public/           # Static assets
-│   ├── package.json      # Node dependencies
-│   └── tailwind.config.js # Tailwind configuration
-└── README.md             # This file
 ```
 
 ## 🔧 configuration
@@ -165,69 +127,62 @@ create a `.env` file in the `backend/` directory:
 GOOGLE_API_KEY=your_gemini_api_key_here
 ```
 
-### customizing the vector store
+### adding new documentation sources
 
-edit `embed_store.py` to modify:
-
-- **model**: change `paraphrase-MiniLM-L3-v2` to other sentence transformers
-- **dimensions**: adjust `dim=384` based on your model
-- **index type**: switch from `IndexFlatL2` to other faiss indices
-
-### adding your own docs
-
-use the scraper or add documents manually:
+edit `tools.py` to add new documentation sources:
 
 ```python
-from embed_store import EmbedStore
-
-store = EmbedStore()
-documents = ["your documentation content here..."]
-store.add_texts(documents)
+"your_tool": ToolConfig(
+    name="Your Tool",
+    tool_type=ToolType.YOUR_CATEGORY,
+    base_url="https://your-tool.com/docs",
+    scrape_paths=["/api", "/guides"],
+    selectors={"content": "article", "title": "h1"}
+)
 ```
 
-## 🔌 api stuff
+### customizing the vector store
+
+the project uses chromadb with sentence transformers (`all-MiniLM-L6-v2`). you can modify `embed_store.py` to:
+
+- change the embedding model
+- adjust similarity thresholds  
+- modify collection settings
+
+## �️ api endpoints
 
 ### `POST /ask`
 
-ask questions about the documentation.
+ask questions about any of the supported documentation sources.
 
 **request:**
-
 ```json
 {
-  "question": "how do i authenticate with the api?"
+  "question": "how do i setup stripe checkout with react?"
 }
 ```
 
 **response:**
-
 ```json
 {
-  "answer": "based on the documentation, you can authenticate using..."
+  "answer": "based on the documentation, you can set up stripe checkout...",
+  "sources": [
+    {
+      "title": "Stripe Checkout Guide",
+      "url": "https://stripe.com/docs/checkout"
+    }
+  ]
 }
 ```
 
-## ⚡ performance tweaks
+### `POST /initialize`
 
-## 🛠️ api endpoints
-
-### `POST /ask`
-
-Ask questions about the documentation.
-
-**request:**
-
-```json
-{
-  "question": "How do I authenticate with the API?"
-}
-```
+scrape and index all enabled documentation sources.
 
 **response:**
-
 ```json
 {
-  "answer": "Based on the documentation, you can authenticate using..."
+  "message": "successfully initialized with X documents"
 }
 ```
 
@@ -235,30 +190,35 @@ Ask questions about the documentation.
 
 ### vector store optimizations
 
-- **query caching**: repeated queries are cached for instant results
-- **fast model**: uses `paraphrase-MiniLM-L3-v2` for optimal speed/accuracy balance
-- **efficient storage**: faiss provides sub-millisecond search times
+- **chromadb persistence**: automatic disk persistence for embeddings
+- **sentence transformers**: optimized `all-MiniLM-L6-v2` model for speed/accuracy balance
+- **efficient retrieval**: chromadb's optimized similarity search
 
 ### frontend optimizations
 
 - **vite build**: lightning-fast development and build times
 - **tailwind css**: optimized css with tree-shaking
-- **component lazy loading**: efficient react component loading
+- **component architecture**: efficient react component loading
 
 ## 🧪 development
 
-### adding cool stuff
+### adding new features
 
 1. **backend**: add endpoints in `main.py`
-2. **frontend**: create components in `src/components/`
-3. **vector store**: extend `embed_store.py` for new functionality
+2. **frontend**: create components in `src/components/`  
+3. **documentation sources**: extend `tools.py` with new configs
 
-### testing things out
+### testing the setup
 
 ```bash
-cd backend
-python embed_store.py  # test vector store
-python scrape.py       # test documentation scraping
+# test the vector store
+cd backend && python embed_store.py
+
+# test documentation scraping  
+cd backend && python scrape.py
+
+# test specific tool scraping
+cd backend && python -c "from scrape import scrape_react_docs; print(len(scrape_react_docs()))"
 ```
 
 ### development commands
@@ -267,48 +227,60 @@ python scrape.py       # test documentation scraping
 # backend development
 cd backend && uvicorn main:app --reload
 
-# frontend development
+# frontend development  
 cd frontend && npm run dev
 
 # build for production
 cd frontend && npm run build
 ```
 
-## �️ tech stack
+## 🔧 tech stack
 
-### Backend
+### backend
 
-- **FastAPI**: Modern, fast web framework
-- **FAISS**: Vector similarity search
-- **Sentence Transformers**: Text embeddings
-- **Google Gemini**: Language model integration
-- **BeautifulSoup**: Web scraping
+- **fastapi**: modern, fast web framework
+- **chromadb**: vector database for embeddings
+- **sentence transformers**: text embeddings (`all-MiniLM-L6-v2`)
+- **google gemini**: language model integration
+- **beautifulsoup**: web scraping
 
-### Frontend
+### frontend
 
-- **React 19**: UI framework
-- **TypeScript**: Type safety
-- **Tailwind CSS**: Utility-first styling
-- **Vite**: Build tool and dev server
-- **Lucide React**: Icon library
+- **react 18**: ui framework  
+- **typescript**: type safety
+- **tailwind css**: utility-first styling
+- **vite**: build tool and dev server
+- **lucide react**: icon library
 
-## 🚀 Deployment
+## 🚀 deployment
 
-### backend Deployment
+### backend deployment
 
 ```bash
-# Install production dependencies
+# install production dependencies
 pip install gunicorn
 
-# Run with Gunicorn
+# run with gunicorn
 gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
 ```
 
-### frontend Deployment
+### frontend deployment
 
 ```bash
-# Build for production
+# build for production
 npm run build
 
-# Serve the dist/ folder with any static hosting service
+# serve the dist/ folder with any static hosting service
 ```
+
+## 💡 example queries
+
+- "how do i create a stripe payment intent?"
+- "what's the difference between app router and pages router in next.js?"
+- "how do i make a responsive grid with tailwind?"
+- "how do i deploy a react app to vercel?"
+- "what are react hooks and how do i use usestate?"
+
+---
+
+built with ❤️ for developers who love good documentation

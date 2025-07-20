@@ -16,6 +16,9 @@ venv.bak/
 *.pkl
 chroma_store/
 
+# Exclude trip-planner folder
+trip-planner/
+
 # Node.js
 node_modules/
 npm-debug.log*

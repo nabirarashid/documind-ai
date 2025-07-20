@@ -46,19 +46,22 @@ TOOLS = {
         tool_type=ToolType.STYLING,
         base_url="https://tailwindcss.com/docs",
         scrape_paths=[
-            "/installation",
-            "/utility-first",
+            "/installation/using-vite",
+            "/styling-with-utility-classes",
             "/responsive-design",
             "/hover-focus-and-other-states",
             "/dark-mode",
-            "/layout",
-            "/flexbox-and-grid",
-            "/spacing",
-            "/typography",
-            "/backgrounds",
-            "/borders",
-            "/effects",
-            "/components"
+            "/columns",
+            "/gap",
+            "/flex-direction",
+            "/flex-wrap",
+            "/padding",
+            "/margin"
+            "/colour",
+            "/content",
+            "/border-style",
+            "/filter",
+            "/transition-property"
         ],
         selectors={
             "content": ".prose, article, main",
@@ -95,7 +98,6 @@ TOOLS = {
         tool_type=ToolType.DEPLOYMENT,
         base_url="https://vercel.com/docs",
         scrape_paths=[
-            "/concepts",
             "/projects",
             "/deployments",
             "/functions",
@@ -115,10 +117,11 @@ TOOLS = {
         tool_type=ToolType.JS_FRAMEWORK,
         base_url="https://nextjs.org/docs",
         scrape_paths=[
-            "/getting-started",
-            "/app/building-your-application",
-            "/app/api-reference",
-            "/pages/building-your-application"
+            "/app/getting-started/installation",
+            "/pages/building-your-application",
+            "/app/getting-started/layouts-and-pages",
+            "/app/api-reference/cli",
+            "/app/api-reference/components/script"
         ],
         selectors={
             "content": "article, .nextra-content, main",
