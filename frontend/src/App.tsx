@@ -2,6 +2,7 @@ import { Search, Zap, Brain } from 'lucide-react';
 import Header from './components/Header';
 import ChatInterface from './components/ChatInterface';
 import FeatureCard from './components/FeatureCard';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -41,55 +42,7 @@ const App = () => {
           </div>
           <ChatInterface />
         </div>
-
-        {/* Secondary Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-2xl p-6 border border-gray-200">
-            <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
-              <Search className="h-5 w-5 mr-2 text-blue-600" />
-              Popular Topics
-            </h3>
-            <div className="space-y-3">
-              {[
-                'API Authentication & Security',
-                'Webhook Integration Patterns',
-                'Rate Limiting & Throttling',
-                'Error Handling Best Practices',
-                'SDK Usage Examples',
-                'Payment Processing Flows'
-              ].map((topic, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 hover:bg-blue-50 rounded-lg cursor-pointer transition-colors duration-200 border border-transparent hover:border-blue-200">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span className="text-sm text-gray-700 font-medium">{topic}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-2xl p-6">
-            <h3 className="font-semibold mb-4 flex items-center">
-              <Zap className="h-5 w-5 mr-2" />
-              System Performance
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-green-100 mb-1">Cost per Query</p>
-                <p className="text-2xl font-bold">$0.001</p>
-              </div>
-              <div>
-                <p className="text-sm text-green-100 mb-1">Average Response Time</p>
-                <p className="text-2xl font-bold">1.2s</p>
-              </div>
-              <div>
-                <p className="text-sm text-green-100 mb-1">Accuracy Rate</p>
-                <p className="text-2xl font-bold">94%</p>
-              </div>
-            </div>
-            <div className="mt-4 text-xs bg-white/20 rounded-full px-3 py-2 inline-block">
-              Powered by open-source tools + Gemini Flash
-            </div>
-          </div>
-        </div>
+        <Footer />  
       </main>
     </div>
   );

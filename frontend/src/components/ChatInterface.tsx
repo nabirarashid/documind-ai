@@ -4,7 +4,7 @@ import ChatInput from './ChatInput';
 import Message from './Message';
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
       text: "Hi! I'm your documentation assistant. I can help you find information about APIs, code examples, and technical documentation. What would you like to know?",
@@ -28,6 +28,12 @@ interface ChatMessage {
     id: number;
     text: string;
     isBot: boolean;
+    sources?: Array<{
+        tool: string;
+        title: string;
+        url: string;
+        snippet: string;
+    }>;
 }
 
 const handleSendMessage = async (messageText: string): Promise<void> => {
@@ -56,10 +62,14 @@ const handleSendMessage = async (messageText: string): Promise<void> => {
 
         const data = await response.json();
         
+        // Create sources from the context chunks (if available)
+        const sources = data.sources || [];
+        
         const botResponse: ChatMessage = {
             id: messages.length + 2,
             text: data.answer || "Sorry, I couldn't get a response right now.",
-            isBot: true
+            isBot: true,
+            sources: sources
         };
         
         setMessages((prev: ChatMessage[]) => [...prev, botResponse]);
@@ -97,7 +107,12 @@ const handleSendMessage = async (messageText: string): Promise<void> => {
         className="h-[500px] overflow-y-auto p-6 bg-gradient-to-b from-gray-50 to-white"
       >
         {messages.map(msg => (
-          <Message key={msg.id} message={msg.text} isBot={msg.isBot} />
+          <Message 
+            key={msg.id} 
+            message={msg.text} 
+            isBot={msg.isBot} 
+            sources={msg.sources}
+          />
         ))}
         
         {isLoading && (
