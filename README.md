@@ -153,7 +153,7 @@ ai-dev-assistant/
 └── README.md             # This file
 ```
 
-## 🔧 Configuration
+## 🔧 configuration
 
 ### backend environment
 
@@ -205,13 +205,13 @@ ask questions about the documentation.
 
 ## ⚡ performance tweaks
 
-## 🛠️ API Endpoints
+## 🛠️ api endpoints
 
 ### `POST /ask`
 
 Ask questions about the documentation.
 
-**Request:**
+**request:**
 
 ```json
 {
@@ -219,7 +219,7 @@ Ask questions about the documentation.
 }
 ```
 
-**Response:**
+**response:**
 
 ```json
 {
@@ -227,7 +227,7 @@ Ask questions about the documentation.
 }
 ```
 
-## 🎯 Performance Optimizations
+## 🎯 performance optimizations
 
 ### vector store optimizations
 
@@ -290,7 +290,7 @@ cd frontend && npm run build
 
 ## 🚀 Deployment
 
-### Backend Deployment
+### backend Deployment
 
 ```bash
 # Install production dependencies
@@ -300,7 +300,7 @@ pip install gunicorn
 gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
 ```
 
-### Frontend Deployment
+### frontend Deployment
 
 ```bash
 # Build for production
@@ -308,27 +308,3 @@ npm run build
 
 # Serve the dist/ folder with any static hosting service
 ```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🔗 Links
-
-- [fastapi documentation](https://fastapi.tiangolo.com/)
-- [faiss documentation](https://faiss.ai/)
-- [sentence transformers](https://www.sbert.net/)
-- [react documentation](https://react.dev/)
-- [tailwind css](https://tailwindcss.com/)
-
----
-
-built with ❤️ using modern ai and web technologies.
