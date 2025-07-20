@@ -3,9 +3,11 @@ import Header from './components/Header';
 import ChatInterface from './components/ChatInterface';
 import FeatureCard from './components/FeatureCard';
 import Footer from './components/Footer';
+import { AuthProvider } from './contexts/AuthContext';
 
 const App = () => {
   return (
+    <AuthProvider>
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
       <Header />
       
@@ -45,6 +47,7 @@ const App = () => {
         <Footer />  
       </main>
     </div>
+    </AuthProvider>
   );
 }
 

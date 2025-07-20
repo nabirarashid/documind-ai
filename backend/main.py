@@ -11,10 +11,18 @@ load_dotenv()
 
 app = FastAPI()
 
+# CORS for production + development
+origins = [
+    "http://localhost:5173",  # local dev
+    "http://localhost:3000",  # alternative local
+    "https://*.vercel.app",   # vercel deployments
+    "https://your-app-name.vercel.app",  # replace with your actual domain
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # for dev only
-    allow_methods=["*"],
+    allow_origins=origins,
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 

@@ -3,6 +3,6 @@ uvicorn
 beautifulsoup4
 requests
 sentence-transformers
-faiss-cpu
+chromadb
 google-generativeai
 python-dotenv

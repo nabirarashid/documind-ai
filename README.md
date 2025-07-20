@@ -5,7 +5,7 @@ a powerful rag (retrieval-augmented generation) system that enables semantic sea
 ## ✨ features
 
 - **🔍 multi-source search**: semantic search across stripe, react, next.js, tailwind css, and vercel docs
-- **⚡ lightning fast**: optimized with chromadb for sub-second search performance  
+- **⚡ lightning fast**: optimized with chromadb for sub-second search performance
 - **🤖 ai-powered**: integrated with google gemini flash for intelligent responses
 - **📚 source attribution**: shows relevant documentation sources for each answer
 - **💾 persistent storage**: vector embeddings cached with chromadb for instant retrieval
@@ -28,7 +28,7 @@ a powerful rag (retrieval-augmented generation) system that enables semantic sea
 ## 📚 supported documentation
 
 - **💳 stripe**: payment apis, checkout, billing, connect
-- **⚛️ react**: components, hooks, state management, routing  
+- **⚛️ react**: components, hooks, state management, routing
 - **🔗 next.js**: app router, pages, api routes, deployment
 - **🎨 tailwind css**: utility classes, responsive design, dark mode
 - **☁️ vercel**: deployment, functions, storage, cli
@@ -100,7 +100,7 @@ visit `http://localhost:5173` to start asking questions! 🎉
 ai-dev-assistant/
 ├── backend/
 │   ├── main.py              # fastapi application with rag endpoints
-│   ├── embed_store.py       # chromadb vector store wrapper  
+│   ├── embed_store.py       # chromadb vector store wrapper
 │   ├── tools.py            # documentation source configurations
 │   ├── scrape.py           # multi-source documentation scraper
 │   ├── requirements.txt    # python dependencies
@@ -146,7 +146,7 @@ edit `tools.py` to add new documentation sources:
 the project uses chromadb with sentence transformers (`all-MiniLM-L6-v2`). you can modify `embed_store.py` to:
 
 - change the embedding model
-- adjust similarity thresholds  
+- adjust similarity thresholds
 - modify collection settings
 
 ## �️ api endpoints
@@ -156,6 +156,7 @@ the project uses chromadb with sentence transformers (`all-MiniLM-L6-v2`). you c
 ask questions about any of the supported documentation sources.
 
 **request:**
+
 ```json
 {
   "question": "how do i setup stripe checkout with react?"
@@ -163,6 +164,7 @@ ask questions about any of the supported documentation sources.
 ```
 
 **response:**
+
 ```json
 {
   "answer": "based on the documentation, you can set up stripe checkout...",
@@ -180,6 +182,7 @@ ask questions about any of the supported documentation sources.
 scrape and index all enabled documentation sources.
 
 **response:**
+
 ```json
 {
   "message": "successfully initialized with X documents"
@@ -205,7 +208,7 @@ scrape and index all enabled documentation sources.
 ### adding new features
 
 1. **backend**: add endpoints in `main.py`
-2. **frontend**: create components in `src/components/`  
+2. **frontend**: create components in `src/components/`
 3. **documentation sources**: extend `tools.py` with new configs
 
 ### testing the setup
@@ -214,7 +217,7 @@ scrape and index all enabled documentation sources.
 # test the vector store
 cd backend && python embed_store.py
 
-# test documentation scraping  
+# test documentation scraping
 cd backend && python scrape.py
 
 # test specific tool scraping
@@ -227,7 +230,7 @@ cd backend && python -c "from scrape import scrape_react_docs; print(len(scrape_
 # backend development
 cd backend && uvicorn main:app --reload
 
-# frontend development  
+# frontend development
 cd frontend && npm run dev
 
 # build for production
@@ -246,7 +249,7 @@ cd frontend && npm run build
 
 ### frontend
 
-- **react 18**: ui framework  
+- **react 18**: ui framework
 - **typescript**: type safety
 - **tailwind css**: utility-first styling
 - **vite**: build tool and dev server
