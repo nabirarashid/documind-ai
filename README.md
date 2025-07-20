@@ -16,10 +16,10 @@ a powerful rag (retrieval-augmented generation) system that enables semantic sea
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   react frontend │    │  fastapi backend │    │  vector store   │
+│ react frontend  │    │  fastapi backend │    │  vector store   │
 │                 │────│                  │────│                 │
 │ • chat interface│    │ • rag pipeline   │    │ • faiss index   │
-│ • tailwind css │    │ • gemini flash   │    │ • embeddings    │
+│ • tailwind css  │    │ • gemini flash   │    │ • embeddings    │
 │ • vite build    │    │ • cors enabled   │    │ • metadata      │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
