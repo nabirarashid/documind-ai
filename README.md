@@ -70,6 +70,7 @@ npm run dev
 ### 4. run everything
 
 **backend** (terminal 1):
+
 ```bash
 cd backend
 source venv/bin/activate
@@ -77,6 +78,7 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 **frontend** (terminal 2):
+
 ```bash
 cd frontend
 npm run dev
@@ -190,6 +192,7 @@ store.add_texts(documents)
 ask questions about the documentation.
 
 **request:**
+
 ```json
 {
   "question": "how do i authenticate with the api?"
@@ -197,6 +200,7 @@ ask questions about the documentation.
 ```
 
 **response:**
+
 ```json
 {
   "answer": "based on the documentation, you can authenticate using..."
