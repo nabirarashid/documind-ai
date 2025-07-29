@@ -6,6 +6,7 @@ from openai import OpenAI
 from embed_store import EmbedStore
 from tools import get_enabled_tools, get_tool_config
 from typing import List, Optional
+import uvicorn
 
 load_dotenv()
 
@@ -242,5 +243,5 @@ async def get_status():
         return {"status": "error", "message": str(e)}
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=False)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
