@@ -22,7 +22,7 @@ origins = [
     "http://localhost:5173",  # local dev
     "http://localhost:3000",  # alternative local
     "https://*.vercel.app",   # vercel deployments
-    "https://documind-ai-lilac.vercel.app/",  # replace with your actual domain
+    "https://documind-ai-lilac.vercel.app",  # replace with your actual domain
 ]
 
 app.add_middleware(
