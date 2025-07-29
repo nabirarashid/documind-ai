@@ -46,7 +46,7 @@ TOOLS = {
         tool_type=ToolType.STYLING,
         base_url="https://tailwindcss.com/docs",
         scrape_paths=[
-            "/installation/using-vite",
+            "docs/installation/using-vite",
             "/styling-with-utility-classes",
             "/responsive-design",
             "/hover-focus-and-other-states",
