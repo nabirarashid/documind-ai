@@ -1,5 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { SourceReferences } from "./Source";
+import ReactMarkdown from 'react-markdown';
 
 interface MessageProps {
   message: string;
@@ -27,12 +28,22 @@ const Message = ({ message, isBot, sources }: MessageProps) => (
           <span className="text-xs font-medium text-gray-600">DocuMind AI</span>
         </div>
       )}
-      <p className="text-sm leading-relaxed">{message}</p>
+      <div className="text-sm leading-relaxed break-words whitespace-pre-line">
+        <ReactMarkdown>{message}</ReactMarkdown>
+      </div>
 
-      {/* Show sources for bot messages */}
       {isBot && sources && sources.length > 0 && (
-        <SourceReferences sources={sources} className="mt-3" />
-      )}
+  <SourceReferences
+    sources={
+      sources.filter(
+        (source, index, self) =>
+          source.url &&
+          self.findIndex(s => s.url === source.url) === index
+      )
+    }
+    className="mt-3"
+  />
+  )}
     </div>
   </div>
 );

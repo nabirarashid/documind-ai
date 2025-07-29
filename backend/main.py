@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
-import google.generativeai as genai
+from openai import OpenAI
 from embed_store import EmbedStore
 from tools import get_enabled_tools, get_tool_config
 from typing import List, Optional
@@ -10,6 +10,11 @@ from typing import List, Optional
 load_dotenv()
 
 app = FastAPI()
+
+client = OpenAI(
+    api_key=os.getenv("DEEPSEEK_API_KEY"),
+    base_url="https://api.deepseek.com"
+)
 
 # CORS for production + development
 origins = [
@@ -25,9 +30,6 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
-
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
 
 embed_store = EmbedStore.get_instance()
 
@@ -102,12 +104,19 @@ Instructions:
 - Be concise but thorough
 """
 
-        print("6. Calling Gemini API")
-        response = model.generate_content(prompt)  
-        print("7. Got response from Gemini")
+        print("6. Calling DeepSeek API")
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": "You are an AI assistant specializing in developer tools and frameworks."},
+                {"role": "user", "content": prompt}
+            ],
+            stream=False
+        )  
+        print("7. Got response from DeepSeek")
         
         return {
-            "answer": response.text,
+            "answer": response.choices[0].message.content,
             "sources": sources
         }
         
