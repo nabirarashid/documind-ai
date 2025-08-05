@@ -26,13 +26,13 @@ TOOLS = {
     "stripe": ToolConfig(
         name="Stripe",
         tool_type=ToolType.PAYMENT,
-        base_url="https://stripe.com/docs",
+        base_url="https://stripe.com/",
         scrape_paths=[
-            "/api",
-            "/payments",
-            "/connect",
-            "/billing",
-            "/checkout"
+            "/docs/api",
+            "/docs/payments",
+            "/docs/connect",
+            "/docs/billing",
+            "/docs/checkout"
         ],
         selectors={
             "content": "article, .docs-content, main",
