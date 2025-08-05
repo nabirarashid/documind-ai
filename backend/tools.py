@@ -44,24 +44,24 @@ TOOLS = {
     "tailwind": ToolConfig(
         name="Tailwind CSS",
         tool_type=ToolType.STYLING,
-        base_url="https://tailwindcss.com/docs",
+        base_url="https://tailwindcss.com",
         scrape_paths=[
-            "docs/installation/using-vite",
-            "/styling-with-utility-classes",
-            "/responsive-design",
-            "/hover-focus-and-other-states",
-            "/dark-mode",
-            "/columns",
-            "/gap",
-            "/flex-direction",
-            "/flex-wrap",
-            "/padding",
-            "/margin"
-            "/colour",
-            "/content",
-            "/border-style",
-            "/filter",
-            "/transition-property"
+            "/docs/installation/using-vite",
+            "/docs/utility-first",
+            "/docs/responsive-design",
+            "/docs/hover-focus-and-other-states",
+            "/docs/dark-mode",
+            "/docs/columns",
+            "/docs/gap",
+            "/docs/flex-direction",
+            "/docs/flex-wrap",
+            "/docs/padding",
+            "/docs/margin",
+            "/docs/text-color",
+            "/docs/content",
+            "/docs/border-style",
+            "/docs/backdrop-filter",
+            "/docs/transition-property"
         ],
         selectors={
             "content": ".prose, article, main",
@@ -96,14 +96,14 @@ TOOLS = {
     "vercel": ToolConfig(
         name="Vercel",
         tool_type=ToolType.DEPLOYMENT,
-        base_url="https://vercel.com/docs",
+        base_url="https://vercel.com",
         scrape_paths=[
-            "/projects",
-            "/deployments",
-            "/functions",
-            "/storage",
-            "/frameworks",
-            "/cli"
+            "/docs/projects",
+            "/docs/deployments",
+            "/docs/functions",
+            "/docs/storage",
+            "/docs/frameworks",
+            "/docs/cli"
         ],
         selectors={
             "content": ".prose, article, main",
@@ -115,13 +115,14 @@ TOOLS = {
     "nextjs": ToolConfig(
         name="Next.js",
         tool_type=ToolType.JS_FRAMEWORK,
-        base_url="https://nextjs.org/docs",
+        base_url="https://nextjs.org",
         scrape_paths=[
-            "/app/getting-started/installation",
-            "/pages/building-your-application",
-            "/app/getting-started/layouts-and-pages",
-            "/app/api-reference/cli",
-            "/app/api-reference/components/script"
+            "/docs/getting-started/installation",
+            "/docs/pages/building-your-application",
+            "/docs/app/building-your-application",
+            "/docs/app/api-reference/cli",
+            "/docs/app/api-reference/components/script",
+            "/docs/pages/api-reference/create-next-app"
         ],
         selectors={
             "content": "article, .nextra-content, main",

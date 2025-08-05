@@ -35,7 +35,7 @@ const Header = () => {
             <div className="flex items-center space-x-4">
               <div className="hidden md:flex items-center space-x-2 bg-white/10 rounded-full px-3 py-1">
                 <Zap className="h-4 w-4" />
-                <span className="text-sm">Powered by Gemini Flash</span>
+                <span className="text-sm">Powered by DeepSeek</span>
               </div>
 
               {user ? (
